@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-// MenuItem class to represent each item on the menu
+// MenuItem class remains unchanged
 class MenuItem {
     private String name;
     private double price;
@@ -34,7 +34,7 @@ class MenuItem {
     }
 }
 
-// MenuCategory class to represent different categories of menu items
+// MenuCategory class remains unchanged
 class MenuCategory {
     private String name;
     private List<MenuItem> items;
@@ -65,7 +65,7 @@ class MenuCategory {
     }
 }
 
-// HotelMenu class to manage the entire menu system
+// HotelMenu class with modified placeOrder method
 class HotelMenu {
     private List<MenuCategory> categories;
     private Map<String, Integer> order;
@@ -87,29 +87,37 @@ class HotelMenu {
 
     public void placeOrder(Scanner scanner) {
         while (true) {
-            System.out.println("Enter the category name (or 'done' to finish ordering): ");
-            String categoryName = scanner.nextLine().trim();
+            System.out.println("Available categories:");
+            for (int i = 0; i < categories.size(); i++) {
+                System.out.println((i + 1) + ". " + categories.get(i).getName());
+            }
+            System.out.println("Enter the category number (or 0 to finish ordering): ");
+            int categoryNumber = Integer.parseInt(scanner.nextLine());
 
-            if (categoryName.equalsIgnoreCase("done")) {
+            if (categoryNumber == 0) {
                 break;
             }
 
-            MenuCategory selectedCategory = findCategory(categoryName);
-            if (selectedCategory == null) {
-                System.out.println("Category not found. Please try again.");
+            if (categoryNumber < 1 || categoryNumber > categories.size()) {
+                System.out.println("Invalid category number. Please try again.");
                 continue;
             }
 
+            MenuCategory selectedCategory = categories.get(categoryNumber - 1);
             selectedCategory.displayItems();
-            System.out.println("Enter the item number you want to order: ");
-            int itemNumber = Integer.parseInt(scanner.nextLine()) - 1;
+            System.out.println("Enter the item number you want to order (or 0 to go back to categories): ");
+            int itemNumber = Integer.parseInt(scanner.nextLine());
 
-            if (itemNumber < 0 || itemNumber >= selectedCategory.getItems().size()) {
+            if (itemNumber == 0) {
+                continue;
+            }
+
+            if (itemNumber < 1 || itemNumber > selectedCategory.getItems().size()) {
                 System.out.println("Invalid item number. Please try again.");
                 continue;
             }
 
-            MenuItem selectedItem = selectedCategory.getItems().get(itemNumber);
+            MenuItem selectedItem = selectedCategory.getItems().get(itemNumber - 1);
             System.out.println("Enter the quantity: ");
             int quantity = Integer.parseInt(scanner.nextLine());
 
@@ -137,15 +145,6 @@ class HotelMenu {
         System.out.printf("Total: $%.2f\n", total);
     }
 
-    private MenuCategory findCategory(String name) {
-        for (MenuCategory category : categories) {
-            if (category.getName().equalsIgnoreCase(name)) {
-                return category;
-            }
-        }
-        return null;
-    }
-
     private MenuItem findMenuItem(String name) {
         for (MenuCategory category : categories) {
             for (MenuItem item : category.getItems()) {
@@ -158,21 +157,24 @@ class HotelMenu {
     }
 }
 
-// Main class to run the hotel menu system
+// Main class remains largely unchanged, with a small modification in the main method
 public class HotelMenuSystem {
     public static void main(String[] args) {
         HotelMenu menu = new HotelMenu();
 
         // Create menu categories and items
         MenuCategory appetizers = new MenuCategory("Appetizers");
+        System.out.println();
         appetizers.addItem(new MenuItem("Bruschetta", 8.99, "Toasted bread topped with tomatoes, garlic, and basil"));
         appetizers.addItem(new MenuItem("Calamari", 10.99, "Fried squid rings served with marinara sauce"));
 
         MenuCategory mainCourse = new MenuCategory("Main Course");
+        System.out.println();
         mainCourse.addItem(new MenuItem("Grilled Salmon", 22.99, "Fresh salmon fillet with lemon butter sauce"));
         mainCourse.addItem(new MenuItem("Chicken Parmesan", 18.99, "Breaded chicken breast topped with marinara and mozzarella"));
 
         MenuCategory desserts = new MenuCategory("Desserts");
+        System.out.println();
         desserts.addItem(new MenuItem("Tiramisu", 7.99, "Classic Italian coffee-flavored dessert"));
         desserts.addItem(new MenuItem("Chocolate Lava Cake", 8.99, "Warm chocolate cake with a gooey center"));
 
