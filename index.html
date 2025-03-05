@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AveMenu - Hotel Menu System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #e67e22;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #e67e22;
+        }
+        
+        .main-content {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .menu-categories {
+            display: flex;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .category-btn {
+            padding: 0.5rem 1rem;
+            margin-right: 1rem;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .category-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-details {
+            padding: 1rem;
+        }
+        
+        .item-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .item-description {
+            color: #666;
+            margin-bottom: 1rem;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .item-price {
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .add-to-order {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity button {
+            width: 30px;
+            height: 30px;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity button:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .quantity span {
+            margin: 0 0.5rem;
+            width: 30px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .add-btn {
+            padding: 0.5rem 1rem;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            background-color: #d35400;
+        }
+        
+        .cart-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        
+        .cart-items {
+            margin-top: 1rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .cart-item-quantity {
+            color: #3498db;
+            font-weight: 500;
+            margin: 0 1rem;
+        }
+        
+        .cart-item-total {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .cart-item-remove {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item-remove:hover {
+            transform: scale(1.2);
+        }
+        
+        .cart-summary {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 2rem 0;
+            color: #999;
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+            padding-right: 1rem;
+        }
+        
+        .footer-section h3 {
+            color: #e67e22;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        }
+
+        #order-success {
+            display: none;
+            background-color: #2ecc71;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Ave<span>Menu</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#menu" class="active">Menu</a></li>
+                    <li><a href="#cart">Order</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content container">
+        <section id="menu">
+            <h2 class="section-title">Our Menu</h2>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="appetizers">Appetizers</button>
+                <button class="category-btn" data-category="main-course">Main Course</button>
+                <button class="category-btn" data-category="desserts">Desserts</button>
+            </div>
+            
+            <div class="menu-items">
+                <!-- Menu items will be dynamically added here -->
+            </div>
+        </section>
+        
+        <section id="cart" class="cart-section">
+            <h2 class="section-title">Your Order</h2>
+            
+            <div id="order-success">
+                Order placed successfully! Your order number: <span id="order-number"></span>
+            </div>
+            
+            <div class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+                <div class="empty-cart">
+                    <p>Your order is empty. Add some delicious items from our menu!</p>
+                </div>
+            </div>
+            
+            <div class="cart-summary" style="display: none;">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-price">$0.00</span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn">Place Order</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>About AveMenu</h3>
+                <p>AveMenu is a premium hotel dining system designed to provide an exceptional culinary experience for our guests.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@avemenu.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2025 AveMenu Hotel Menu System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu data (would normally be fetched from the server)
+        const menuData = {
+            categories: [
+                {
+                    id: 'appetizers',
+                    name: 'Appetizers',
+                    items: [
+                        { 
+                            id: 1, 
+                            name: 'Bruschetta', 
+                            price: 8.99, 
+                            description: 'Toasted bread topped with tomatoes, garlic, and basil',
+                            categoryId: 'appetizers'
+                        },
+                        { 
+                            id: 2, 
+                            name: 'Calamari', 
+                            price: 10.99, 
+                            description: 'Fried squid rings served with marinara sauce',
+                            categoryId: 'appetizers'
+                        }
+                    ]
+                },
+                {
+                    id: 'main-course',
+                    name: 'Main Course',
+                    items: [
+                        { 
+                            id: 3, 
+                            name: 'Grilled Salmon', 
+                            price: 22.99, 
+                            description: 'Fresh salmon fillet with lemon butter sauce',
+                            categoryId: 'main-course'
+                        },
+                        { 
+                            id: 4, 
+                            name: 'Chicken Parmesan', 
+                            price: 18.99, 
+                            description: 'Breaded chicken breast topped with marinara and mozzarella',
+                            categoryId: 'main-course'
+                        }
+                    ]
+                },
+                {
+                    id: 'desserts',
+                    name: 'Desserts',
+                    items: [
+                        { 
+                            id: 5, 
+                            name: 'Tiramisu', 
+                            price: 7.99, 
+                            description: 'Classic Italian coffee-flavored dessert',
+                            categoryId: 'desserts'
+                        },
+                        { 
+                            id: 6, 
+                            name: 'Chocolate Lava Cake', 
+                            price: 8.99, 
+                            description: 'Warm chocolate cake with a gooey center',
+                            categoryId: 'desserts'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Get all menu items
+        const getAllMenuItems = () => {
+            return menuData.categories.reduce((items, category) => {
+                return [...items, ...category.items];
+            }, []);
+        };
+
+        // Shopping cart
+        let cart = [];
+
+        // DOM elements
+        const menuItemsContainer = document.querySelector('.menu-items');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const cartSummary = document.querySelector('.cart-summary');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const orderSuccess = document.getElementById('order-success');
+        const orderNumber = document.getElementById('order-number');
+
+        // Display menu items
+        function displayMenuItems(category = 'all') {
+            menuItemsContainer.innerHTML = '';
+            
+            let items = [];
+            if (category === 'all') {
+                items = getAllMenuItems();
+            } else {
+                const categoryData = menuData.categories.find(cat => cat.id === category);
+                if (categoryData) {
+                    items = categoryData.items;
+                }
+            }
+            
+            items.forEach(item => {
+                const menuItemElement = document.createElement('div');
+                menuItemElement.classList.add('menu-item');
+                menuItemElement.innerHTML = `
+                    <div class="item-details">
+                        <h3 class="item-name">${item.name}</h3>
+                        <p class="item-description">${item.description}</p>
+                        <div class="item-price">$${item.price.toFixed(2)}</div>
+                        <div class="add-to-order">
+                            <div class="quantity">
+                                <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                <span class="quantity-value" data-id="${item.id}">1</span>
+                                <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                            </div>
+                            <button class="add-btn" data-id="${item.id}">Add to Order</button>
+                        </div>
+                    </div>
+                `;
+                menuItemsContainer.appendChild(menuItemElement);
+            });
+            
+            // Add event listeners
+            document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                btn.addEventListener('click', decreaseQuantity);
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                btn.addEventListener('click', increaseQuantity);
+            });
+            
+            document.querySelectorAll('.add-btn').forEach(btn => {
+                btn.addEventListener('click', addToCart);
+            });
+        }
+
+        // Filter menu by category
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Display filtered items
+                const category = button.getAttribute('data-category');
+                displayMenuItems(category);
+            });
+        });
+
+        // Increase quantity
+        function increaseQuantity(e) {
+            const itemId = parseInt(e.target.getAttribute('data-id'));
+            const quantityElement = document.querySelector(`.quantity-value[data-id="${itemId}"]`);
+            let quantity = parseInt(quantityElement.textContent);
+            quantity++;
+            quantityElement.textContent = quantity;
+        }
+
+        // Decrease quantity
+        function decreaseQuantity(e) {
+            const itemId = parseInt(e.target.getAttribute('data-id'));
+            const quantityElement = document.querySelector(`.quantity-value[data-id="${itemId}"]`);
+            let quantity = parseInt(quantityElement.textContent);
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+            }
+        }
+
+        // Find menu item by id
+        function findMenuItem(id) {
+            const allItems = getAllMenuItems();
+            return allItems.find(item => item.id === id);
+        }
+
+        // Add item to cart
+        function addToCart(e) {
+            const itemId = parseInt(e.target.getAttribute('data-id'));
+            const quantityElement = document.querySelector(`.quantity-value[data-id="${itemId}"]`);
+            const quantity = parseInt(quantityElement.textContent);
+            
+            const item = findMenuItem(itemId);
+            
+            // Check if item already in cart
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === itemId);
+            
+            if (existingItemIndex !== -1) {
+                // Update quantity if already in cart
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item to cart
+                cart.push({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: quantity
+                });
+            }
+            
+            // Reset quantity display
+            quantityElement.textContent = '1';
+            
+            // Update cart display
+            updateCartDisplay();
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <p>Your order is empty. Add some delicious items from our menu!</p>
+                    </div>
+                `;
+                cartSummary.style.display = 'none';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.classList.add('cart-item');
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)} each</div>
+                    </div>
+                    <div class="cart-item-quantity">x${item.quantity}</div>
+                    <div class="cart-item-total">$${itemTotal.toFixed(2)}</div>
+                    <button class="cart-item-remove" data-id="${item.id}">✕</button>
+                `;
+                
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', removeFromCart);
+            });
+            
+            // Update total and show summary
+            cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+            cartSummary.style.display = 'block';
+        }
+
+        // Remove item from cart
+        function removeFromCart(e) {
+            const itemId = parseInt(e.target.getAttribute('data-id'));
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartDisplay();
+        }
+
+        // Place order
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) return;
+            
+            // In a real app, this would send an API request to the server
+            // For this demo, we'll just simulate a successful order
+            
+            // Generate random order number
+            const orderNum = Math.floor(Math.random() * 1000) + 1000;
+            orderNumber.textContent = orderNum;
+            
+            // Show success message
+            orderSuccess.style.display = 'block';
+            
+            // Clear cart
+            cart = [];
+            updateCartDisplay();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                orderSuccess.style.display = 'none';
+            }, 5000);
+        });
+
+        // Initialize the page
+        displayMenuItems();
+        updateCartDisplay();
+    </script>
+</body>
+</html>
