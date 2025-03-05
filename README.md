@@ -1,130 +1,192 @@
+# AveMenu Hotel Menu System
+## Design Document
 
-# AveMenu System Design Document
+## 1. Project Overview
 
-## 1. Introduction
+### 1.1 Introduction
+AveMenu is a digital menu system designed specifically for hotels to streamline the dining experience for guests. The system provides an interactive, visually appealing interface for browsing menu items, customizing orders, and tracking order status.
 
-### 1.1 Purpose
-The Hotel Menu System is a Java-based console application designed to manage a hotel's menu, allow customers to place orders, and display order summaries. This system aims to streamline the food ordering process in a hotel setting.
+### 1.2 Project Goals
+- Create an intuitive and elegant digital menu system
+- Streamline the ordering process for hotel guests
+- Provide a visually appealing presentation of menu items
+- Enable customization of orders
+- Facilitate efficient order management
+- Enhance the overall dining experience
 
-### 1.2 Scope
-The system includes functionality for displaying the menu, placing orders, and viewing order summaries. It does not include features such as payment processing, kitchen management, or user authentication.
+### 1.3 Target Users
+- Hotel guests
+- Restaurant staff
+- Hotel management
 
-## 2. System Architecture
+## 2. Design Guidelines
 
-The Hotel Menu System is built using a simple object-oriented architecture with the following main components:
+### 2.1 Brand Identity
+AveMenu represents sophistication and ease-of-use. The brand aims to enhance the dining experience through an elegant digital interface.
 
-1. MenuItem
-2. MenuCategory
-3. HotelMenu
-4. HotelMenuSystem (main class)
+### 2.2 Color Scheme
+The color palette consists of three primary colors:
+- **Cream** (#f8f4e9): Background, highlights
+- **White** (#ffffff): Content areas, cards
+- **Olive Green** (#6a7941): Headers, buttons, accents
+- **Light Olive** (#a5b884): Secondary accents, borders
+- **Text Dark** (#333333): Primary text
+- **Text Light** (#666666): Secondary text
 
-These components interact to create a hierarchical structure representing the menu and its items.
+### 2.3 Typography
+- Primary Font: Segoe UI
+- Fallback Fonts: Tahoma, Geneva, Verdana, sans-serif
+- Heading Sizes: 1.8rem (section titles), 1.2rem (item names)
+- Body Text: 1rem
+- Line Height: 1.6
 
-## 3. Component Design
+### 2.4 Spacing and Layout
+- Container Max-Width: 1200px
+- Padding: 1-2rem
+- Grid Layout for Menu Items
+- Responsive breakpoints at 768px
 
-### 3.1 MenuItem
+## 3. User Interface Components
 
-#### Description
-Represents a single item on the menu.
+### 3.1 Header
+- Logo: "AveMenu" with "Menu" in cream color
+- Navigation: Links to sections (Menu, Order, About, Contact)
+- Sticky positioning for easy access
 
-#### Attributes
-- name: String
-- price: double
-- description: String
+### 3.2 Menu Section
+- Category Filters: Pills/buttons for filtering menu items
+- Menu Items Grid: Cards displaying food items
+- Item Cards:
+  - Food Image
+  - Item Name
+  - Description
+  - Price
+  - Quantity Selector
+  - "Add to Order" Button
 
-#### Methods
-- Constructor: MenuItem(String name, double price, String description)
-- Getters: getName(), getPrice(), getDescription()
-- toString(): Returns a formatted string representation of the item
+### 3.3 Order Section
+- Order Summary
+- Item List with quantities and prices
+- Remove Item Functionality
+- Order Total
+- "Place Order" Button
+- Order Confirmation Message
 
-### 3.2 MenuCategory
+### 3.4 Footer
+- About Information
+- Contact Details
+- Copyright Information
 
-#### Description
-Represents a category of menu items (e.g., Appetizers, Main Course, Desserts).
+## 4. User Flow
 
-#### Attributes
-- name: String
-- items: List<MenuItem>
+### 4.1 Browsing Menu
+1. User accesses the AveMenu system
+2. User views the menu categories
+3. User can filter items by category
+4. User views detailed information about menu items
 
-#### Methods
-- Constructor: MenuCategory(String name)
-- addItem(MenuItem item): Adds an item to the category
-- Getters: getName(), getItems()
-- displayItems(): Displays all items in the category
+### 4.2 Placing an Order
+1. User selects item quantity
+2. User adds items to order
+3. User reviews order in the Order section
+4. User can modify quantities or remove items
+5. User places the order
+6. System confirms the order with an order number
 
-### 3.3 HotelMenu
+## 5. Technical Specifications
 
-#### Description
-Manages the entire menu system, including categories, items, and order processing.
+### 5.1 Frontend Technologies
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Responsive Design
 
-#### Attributes
-- categories: List<MenuCategory>
-- order: Map<String, Integer>
+### 5.2 Data Structure
+- Menu data organized by categories
+- Each item contains:
+  - Unique ID
+  - Name
+  - Price
+  - Description
+  - Category ID
+  - Image Path
+  - Optional Tags/Badges
 
-#### Methods
-- Constructor: HotelMenu()
-- addCategory(MenuCategory category): Adds a category to the menu
-- displayMenu(): Displays all categories and items
-- placeOrder(Scanner scanner): Handles the order placement process
-- displayOrder(): Shows the current order and total price
-- findMenuItem(String name): Helper method to find a menu item by name
+### 5.3 Key JavaScript Functions
+- `displayMenuItems()`: Renders menu items based on selected category
+- `increaseQuantity()/decreaseQuantity()`: Manages item quantity selection
+- `addToCart()`: Adds items to the cart
+- `updateCartDisplay()`: Updates the cart UI
+- `removeFromCart()`: Removes items from the cart
+- `placeOrder()`: Processes the order
 
-### 3.4 HotelMenuSystem
+## 6. Responsive Design
 
-#### Description
-Main class that runs the Hotel Menu System and handles user interaction.
+### 6.1 Desktop View (>768px)
+- Menu items displayed in a grid (3-4 items per row)
+- Full navigation in header
+- Two-column layout for order section
 
-#### Methods
-- main(String[] args): Entry point of the application, manages the main program loop and user input
+### 6.2 Mobile View (<768px)
+- Menu items stacked vertically (1 per row)
+- Collapsed navigation
+- Single column layout
+- Accessible quantity controls
 
-## 4. Data Flow
+## 7. Future Enhancements
 
-1. The system initializes with predefined menu categories and items.
-2. Users interact with the main menu to view the menu, place orders, or view their current order.
-3. When placing an order:
-   a. Users select a category
-   b. Users select an item from the chosen category
-   c. Users specify the quantity
-   d. The system adds the item to the order
-4. When viewing an order, the system calculates the total price and displays the order summary.
+### 7.1 Phase 2 Features
+- User authentication for returning guests
+- Order history
+- Favorite items
+- Special dietary filters (vegetarian, gluten-free, etc.)
+- Real-time order tracking
+- Integration with hotel room service
+- Payment processing
+- Multi-language support
 
-## 5. User Interface
+### 7.2 Performance Optimizations
+- Image optimization and lazy loading
+- Code minification
+- Caching strategies
 
-The system uses a console-based interface with the following main options:
+## 8. Implementation Guidelines
 
-1. Display Menu
-2. Place Order
-3. View Order
-4. Exit
+### 8.1 Development Approach
+- Mobile-first responsive design
+- Modular JavaScript for maintainability
+- Semantic HTML for accessibility
+- Progressive enhancement
 
-Users navigate through these options and sub-menus using numeric inputs.
+### 8.2 Testing Strategy
+- Cross-browser testing (Chrome, Firefox, Safari, Edge)
+- Mobile device testing
+- Accessibility testing
+- Performance testing
 
-## 6. Error Handling
+## 9. Asset Requirements
 
-The system includes basic error handling for:
-- Invalid menu selections
-- Invalid category or item selections
-- Invalid quantity inputs
+### 9.1 Image Specifications
+- Menu Item Images: 400x150px minimum, JPG/PNG format
+- Logo: Vector format (SVG preferred)
+- Icons: SVG format for scalability
 
-Error messages are displayed to guide the user in case of incorrect inputs.
+### 9.2 Content Requirements
+- Menu item descriptions (25-50 words each)
+- Category names and descriptions
+- Terms and conditions
+- About information
 
-## 7. Limitations and Future Enhancements
+## 10. Success Metrics
 
-### 7.1 Current Limitations
-- Console-based interface may not be user-friendly for all users
-- No persistent storage of menu items or orders
-- Limited error handling and input validation
+### 10.1 User Experience Metrics
+- Task completion rate
+- Time to complete order
+- User satisfaction surveys
+- Error rate
 
-### 7.2 Potential Future Enhancements
-- Graphical User Interface (GUI) for improved user experience
-- Database integration for persistent storage of menu items and orders
-- User authentication and role-based access (e.g., customers, staff, admin)
-- Kitchen management system integration
-- Payment processing integration
-- Order customization options (e.g., special requests, allergen information)
-- Reporting and analytics features
-- Mobile application version
-
-## 8. Conclusion
-
-The Hotel Menu System provides a foundation for managing a hotel's food ordering process. While currently limited in scope, the object-oriented design allows for easy expansion and enhancement of features in the future.
+### 10.2 Business Metrics
+- Average order value
+- Order frequency
+- Menu item popularity
+- Special offer conversion rate
