@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AveMenu - Hotel Menu System</title>
     <style>
+        :root {
+            --cream: #f8f4e9;
+            --white: #ffffff;
+            --olive-green: #6a7941;
+            --light-olive: #a5b884;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,8 +22,8 @@
         }
         
         body {
-            background-color: #f5f7fa;
-            color: #2c3e50;
+            background-color: var(--cream);
+            color: var(--text-dark);
             line-height: 1.6;
         }
         
@@ -25,7 +34,7 @@
         }
         
         header {
-            background-color: #2c3e50;
+            background-color: var(--olive-green);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -45,7 +54,7 @@
         }
         
         .logo span {
-            color: #e67e22;
+            color: var(--cream);
         }
         
         nav ul {
@@ -64,7 +73,7 @@
         }
         
         nav ul li a:hover {
-            color: #e67e22;
+            color: var(--cream);
         }
         
         .main-content {
@@ -74,9 +83,9 @@
         .section-title {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            color: #2c3e50;
-            border-bottom: 2px solid #e67e22;
+            color: var(--olive-green);
             padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-olive);
             display: inline-block;
         }
         
@@ -90,22 +99,23 @@
         .category-btn {
             padding: 0.5rem 1rem;
             margin-right: 1rem;
-            background-color: #ecf0f1;
-            border: none;
+            background-color: var(--white);
+            border: 1px solid var(--light-olive);
             border-radius: 25px;
             cursor: pointer;
             font-weight: 500;
             white-space: nowrap;
             transition: all 0.3s ease;
+            color: var(--olive-green);
         }
         
         .category-btn.active {
-            background-color: #2c3e50;
+            background-color: var(--olive-green);
             color: white;
         }
         
         .category-btn:hover {
-            background-color: #3498db;
+            background-color: var(--light-olive);
             color: white;
         }
         
@@ -128,6 +138,12 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
+        .item-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+        
         .item-details {
             padding: 1rem;
         }
@@ -135,18 +151,18 @@
         .item-name {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: #2c3e50;
+            color: var(--olive-green);
         }
         
         .item-description {
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 1rem;
             height: 60px;
             overflow: hidden;
         }
         
         .item-price {
-            color: #e67e22;
+            color: var(--olive-green);
             font-weight: bold;
             font-size: 1.2rem;
             margin-bottom: 1rem;
@@ -166,7 +182,7 @@
         .quantity button {
             width: 30px;
             height: 30px;
-            background-color: #ecf0f1;
+            background-color: var(--cream);
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -178,7 +194,7 @@
         }
         
         .quantity button:hover {
-            background-color: #3498db;
+            background-color: var(--light-olive);
             color: white;
         }
         
@@ -191,7 +207,7 @@
         
         .add-btn {
             padding: 0.5rem 1rem;
-            background-color: #e67e22;
+            background-color: var(--olive-green);
             color: white;
             border: none;
             border-radius: 4px;
@@ -200,7 +216,7 @@
         }
         
         .add-btn:hover {
-            background-color: #d35400;
+            background-color: var(--light-olive);
         }
         
         .cart-section {
@@ -209,6 +225,16 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-top: 2rem;
+        }
+        
+        #order-success {
+            display: none;
+            background-color: #4a8c54;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
         }
         
         .cart-items {
@@ -233,32 +259,28 @@
         }
         
         .cart-item-price {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.9rem;
         }
         
         .cart-item-quantity {
-            color: #3498db;
+            color: var(--olive-green);
             font-weight: 500;
             margin: 0 1rem;
         }
         
         .cart-item-total {
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--olive-green);
         }
         
         .cart-item-remove {
-            color: #e74c3c;
+            color: #c55;
             background: none;
             border: none;
             cursor: pointer;
             margin-left: 1rem;
             transition: all 0.3s ease;
-        }
-        
-        .cart-item-remove:hover {
-            transform: scale(1.2);
         }
         
         .cart-summary {
@@ -272,14 +294,14 @@
             justify-content: space-between;
             font-size: 1.2rem;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--olive-green);
             margin-bottom: 1rem;
         }
         
         .checkout-btn {
             width: 100%;
             padding: 0.75rem;
-            background-color: #2ecc71;
+            background-color: var(--olive-green);
             color: white;
             border: none;
             border-radius: 4px;
@@ -290,7 +312,7 @@
         }
         
         .checkout-btn:hover {
-            background-color: #27ae60;
+            background-color: var(--light-olive);
         }
         
         .empty-cart {
@@ -300,7 +322,7 @@
         }
         
         footer {
-            background-color: #2c3e50;
+            background-color: var(--olive-green);
             color: white;
             padding: 2rem 0;
             margin-top: 3rem;
@@ -320,7 +342,7 @@
         }
         
         .footer-section h3 {
-            color: #e67e22;
+            color: var(--cream);
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
@@ -349,16 +371,6 @@
                 margin-right: 1rem;
             }
         }
-
-        #order-success {
-            display: none;
-            background-color: #2ecc71;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
     </style>
 </head>
 <body>
@@ -369,6 +381,8 @@
                 <ul>
                     <li><a href="#menu" class="active">Menu</a></li>
                     <li><a href="#cart">Order</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -444,14 +458,16 @@
                             name: 'Bruschetta', 
                             price: 8.99, 
                             description: 'Toasted bread topped with tomatoes, garlic, and basil',
-                            categoryId: 'appetizers'
+                            categoryId: 'appetizers',
+                            image: 'brushcetta.jpg'
                         },
                         { 
                             id: 2, 
                             name: 'Calamari', 
                             price: 10.99, 
                             description: 'Fried squid rings served with marinara sauce',
-                            categoryId: 'appetizers'
+                            categoryId: 'appetizers',
+                            image: 'calamari.jpg'
                         }
                     ]
                 },
@@ -464,14 +480,16 @@
                             name: 'Grilled Salmon', 
                             price: 22.99, 
                             description: 'Fresh salmon fillet with lemon butter sauce',
-                            categoryId: 'main-course'
+                            categoryId: 'main-course',
+                            image: 'salmon.jpg'
                         },
                         { 
                             id: 4, 
                             name: 'Chicken Parmesan', 
                             price: 18.99, 
                             description: 'Breaded chicken breast topped with marinara and mozzarella',
-                            categoryId: 'main-course'
+                            categoryId: 'main-course',
+                            image: 'chicken permesan.jpg'
                         }
                     ]
                 },
@@ -484,14 +502,16 @@
                             name: 'Tiramisu', 
                             price: 7.99, 
                             description: 'Classic Italian coffee-flavored dessert',
-                            categoryId: 'desserts'
+                            categoryId: 'desserts',
+                            image: 'tiramisu.jpg'
                         },
                         { 
                             id: 6, 
                             name: 'Chocolate Lava Cake', 
                             price: 8.99, 
                             description: 'Warm chocolate cake with a gooey center',
-                            categoryId: 'desserts'
+                            categoryId: 'desserts',
+                            image: 'chocolate cake.jpg'
                         }
                     ]
                 }
@@ -536,6 +556,7 @@
                 const menuItemElement = document.createElement('div');
                 menuItemElement.classList.add('menu-item');
                 menuItemElement.innerHTML = `
+                    <div class="item-image" style="background-image: url('${item.image}')"></div>
                     <div class="item-details">
                         <h3 class="item-name">${item.name}</h3>
                         <p class="item-description">${item.description}</p>
